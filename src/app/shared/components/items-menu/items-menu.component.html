@@ -1,0 +1,15 @@
+<ul
+  class="flex gap-3 w-full text-center"
+  [ngClass]="{ 'flex-col': isVertical }"
+>
+  <li *ngFor="let category of categories">
+    <a
+      class="border border-transparent rounded-md cursor-pointer px-2 py-1 hover:bg-green-store hover:text-white hover:border-green-store"
+      [routerLink]="category.id === '-1' ? '/home' : ['/category', category.id]"
+      routerLinkActive="bg-green-store text-white border-green-store"
+      (click)="closeMenu()"
+    >
+      {{ category.name }}
+    </a>
+  </li>
+</ul>

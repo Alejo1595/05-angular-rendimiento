@@ -1,0 +1,45 @@
+<section class="container mx-auto px-5 md:px-0 flex flex-col gap-y-4 pb-5">
+  <h2 class="text-2xl text-center">Catalogo de productos</h2>
+
+  <div class="flex justify-center">
+    <button
+      class="bg-lime-600 px-3 py-2 rounded-md text-white font-bold"
+      (click)="createProduct()"
+    >
+      Create product
+    </button>
+  </div>
+
+  <div
+    class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 xl:grid-cols-6 gap-x-3 gap-y-5"
+  >
+    <app-product
+      *ngFor="let product of productList"
+      [product]="product"
+      (addedProduct)="addToCar($event)"
+      (productSelected)="showProductDetail($event)"
+    ></app-product>
+  </div>
+
+  <button
+    class="bg-lime-300 py-2 rounded-md font-bold text-lg"
+    (click)="loadMore()"
+  >
+    Load more
+  </button>
+</section>
+
+<app-side-nav
+  [openMenu]="isMenuOpen"
+  [toggleMenu]="toggleMenu"
+  position="right"
+  [isHiddenLgSizeScreen]="false"
+>
+  <ng-container *ngIf="productSelected.id !== -1">
+    <app-product-details-slide
+      [product]="productSelected"
+      [updateProduct]="updateProduct"
+      [deleteProduct]="deleteProduct"
+    ></app-product-details-slide>
+  </ng-container>
+</app-side-nav>

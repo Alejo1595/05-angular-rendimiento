@@ -1,0 +1,7 @@
+<img
+  *ngIf="img"
+  alt="Imagen"
+  [class]="'h-full w-full object-cover block rounded-t ' + class"
+  [src]="img"
+  (error)="imageError()"
+/>

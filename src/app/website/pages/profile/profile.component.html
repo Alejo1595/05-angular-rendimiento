@@ -1,0 +1,8 @@
+<section *ngIf="profile">
+  <pre>
+    {{ profile | json }}
+  </pre>
+  <a *ngIf="profile.role === 'admin'" routerLink="/cms">
+    vista de administrador
+  </a>
+</section>

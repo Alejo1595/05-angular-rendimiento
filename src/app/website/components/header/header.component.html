@@ -1,0 +1,66 @@
+<header class="flex justify-between py-6 px-7">
+  <button (click)="toggleMenu()" class="lg:hidden">
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      class="h-6 w-6"
+      fill="none"
+      viewBox="0 0 24 24"
+      stroke="currentColor"
+      stroke-width="2"
+    >
+      <path
+        stroke-linecap="round"
+        stroke-linejoin="round"
+        d="M4 6h16M4 12h16M4 18h16"
+      />
+    </svg>
+  </button>
+
+  <div class="flex items-center gap-2">
+    <a href="#">
+      <img src="assets/svg/logo_yard_sale.svg" alt="Logo de la tienda" />
+    </a>
+
+    <div class="hidden lg:block">
+      <app-items-menu [categories]="categories"></app-items-menu>
+    </div>
+  </div>
+
+  <button
+    *ngIf="!userProfile"
+    class="border px-2 py-1.5 rounded bg-green-store hover:text-white"
+    (click)="login()"
+  >
+    sing-in
+  </button>
+
+  <div class="flex gap-2 items-center" *ngIf="userProfile">
+    <button
+      *ngIf="userProfile"
+      class="border px-2 py-1.5 rounded bg-green-store hover:text-white"
+      (click)="logout()"
+    >
+      sing-out
+    </button>
+
+    <a routerLink="/profile" class="hidden md:block">
+      {{ userProfile.email }}
+    </a>
+    <div class="relative">
+      <img src="assets/svg/icon_shopping_cart.svg" alt="Logo de la tienda" />
+      <span
+        class="bg-red absolute -top-1/2 left-3/4 w-5 h-5 bg-green-store rounded-full text-white text-xs leading-5 text-center"
+      >
+        {{ totalProductsSelected }}
+      </span>
+    </div>
+  </div>
+</header>
+
+<app-side-nav [openMenu]="isMenuOpen" [toggleMenu]="toggleMenu" position="left">
+  <app-items-menu
+    [categories]="categories"
+    [isVertical]="true"
+    (isCloseMenu)="toggleMenu()"
+  ></app-items-menu>
+</app-side-nav>

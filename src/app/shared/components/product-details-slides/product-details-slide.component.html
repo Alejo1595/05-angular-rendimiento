@@ -1,0 +1,41 @@
+<section class="flex flex-col gap-3 w-full">
+  <div>
+    <ngx-glide #ngxGlide *ngIf="product.images.length !== 0; else elseBlock">
+      <ng-container *ngFor="let image of product?.images">
+        <app-img [changeImage]="image" [alt]="product.title"></app-img>
+      </ng-container>
+    </ngx-glide>
+
+    <ng-template #elseBlock>
+      <app-img [changeImage]="''" [alt]="product.title"></app-img>
+    </ng-template>
+  </div>
+
+  <div class="container mx-auto flex flex-col p-5">
+    <h3 class="text-xl font-bold">{{ product.title }}</h3>
+    <span class="text-lg font-bold">{{ product.price | currency }}</span>
+    <p class="my-5">{{ product.description }}</p>
+    <div class="flex flex-col gap-3">
+      <button
+        class="border py-1 px-2 rounded-lg border-lime-600 w-full bg-lime-300 hover:bg-lime-500"
+        (click)="addToProduct()"
+      >
+        Add car
+      </button>
+
+      <button
+        class="border py-1 px-2 rounded-lg border-amber-600 w-full bg-amber-300 hover:bg-amber-500"
+        (click)="updateProduct()"
+      >
+        Update product
+      </button>
+
+      <button
+        class="border py-1 px-2 rounded-lg border-red-600 w-full bg-red-300 hover:bg-red-500"
+        (click)="deleteProduct()"
+      >
+        Delete product
+      </button>
+    </div>
+  </div>
+</section>
