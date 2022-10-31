@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "angular-firebase-analytics": {
+      "hosting": {
+        "componentes-servicios": [
+          "angular-firebase-analytics"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "angular-firebase-analytics"
+  }
+}
