@@ -39,6 +39,7 @@ import { NgxGlideModule } from 'ngx-glide';
     ProductListComponent,
     SideNavComponent,
     ProductDetailsSlideComponent,
+    NgxGlideModule
   ]
 })
 export class SharedModule { }

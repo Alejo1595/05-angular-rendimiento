@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { RouterModule, Routes, CanDeactivate } from '@angular/router';
+import { RouterModule, Routes, /* CanDeactivate */ } from '@angular/router';
 
 import { ProductDetailsComponent } from './components/product-details/product-details.component';
 import { LayoutComponent } from './components/layout/layout.component';
@@ -63,10 +63,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path: 'cms',
-    loadChildren: () => import('./../cms/cms.module').then(m => m.CmsModule)
   },
 ];
 

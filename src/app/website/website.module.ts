@@ -20,8 +20,6 @@ import { LayoutComponent } from './components/layout/layout.component';
 
 import { WebsiteRoutingModule } from './website-routing.module';
 
-import { NgxGlideModule } from 'ngx-glide';
-
 
 @NgModule({
   declarations: [
@@ -41,7 +39,6 @@ import { NgxGlideModule } from 'ngx-glide';
     WebsiteRoutingModule,
     FormsModule,
     HttpClientModule,
-    NgxGlideModule,
     SharedModule
   ]
 })
