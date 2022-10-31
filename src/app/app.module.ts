@@ -15,8 +15,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { TokenInterceptor } from './interceptors/token.interceptor';
 
 import { AppComponent } from './app.component';
-
-
+import { provideAuth,getAuth } from '@angular/fire/auth';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,6 +24,7 @@ import { AppComponent } from './app.component';
     BrowserModule,
     HttpClientModule,
     QuicklinkModule,
+    provideAuth(() => getAuth()),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     provideAnalytics(() => getAnalytics()),
   ],
@@ -34,12 +34,13 @@ import { AppComponent } from './app.component';
     //   useClass: TimeInterceptor,
     //   multi: true
     // },
+    ScreenTrackingService,
+    UserTrackingService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: TokenInterceptor,
       multi: true
-    },
-    ScreenTrackingService, UserTrackingService
+    }
   ],
   bootstrap: [AppComponent]
 })
