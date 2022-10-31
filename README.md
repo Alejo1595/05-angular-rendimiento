@@ -170,4 +170,12 @@ Para poder realizar este modelo predictivo necesitamos data de los usuarios, es 
 
 En base a esta teoria, el equipo de Google desarrollo una librería llamada guess.js la cual se alimenta de datos obtenidos de google analitycs para generar un modelo predictivo en base al modelo de markov utilizando tensor flow, luego ese modelo predictivo lo añade a los assests del proyecto para que una vez que este en ejecucíon empiece a cargar los modulos con mayor probabilidad de acceso en base a la ruta actual.
 
+#### Configuración
 
+Lo primero que se configuro fue google analitycs por medio de firebase siguiendo el siguiente [post](https://usecsv.com/community/firebase-analytics-angular).
+
+Ua vez configurado google analitycs implementamos [guess.js](https://guess-js.github.io/docs/angular). En la sección de configurar el archivo **extend.webpack.config.js** podemos aplicar un modelo predictivo creado a mano o por medio de google analitycs pero a la fecha esta bloqueda la conexión.
+
+### PWA con angular
+
+Por favor hacer el [siguiente curso](https://platzi.com/clases/1818-pwa-angular/26022-bienvenida-e-introduccion-al-curso/) para tener un mayor contexto de como funcionan las PWA con angular
