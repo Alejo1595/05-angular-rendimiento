@@ -14,6 +14,9 @@ import { ProductListComponent } from './components/product-list/product-list.com
 import { SideNavComponent } from './components/side-nav/side-nav.component';
 import { ProductDetailsSlideComponent } from './components/product-details-slides/product-details-slide.component';
 import { NgxGlideModule } from 'ngx-glide';
+import { RandomListComponent } from './components/random-list/random-list.component';
+import { FormsModule } from '@angular/forms';
+import { MemoizePipe } from './pipes/memoize.pipe';
 
 @NgModule({
   declarations: [
@@ -25,12 +28,15 @@ import { NgxGlideModule } from 'ngx-glide';
     ProductListComponent,
     SideNavComponent,
     ProductDetailsSlideComponent,
+    RandomListComponent,
+    MemoizePipe
   ],
   imports: [
     CommonModule,
     RouterModule,
     NgxGlideModule,
-    QuicklinkModule
+    QuicklinkModule,
+    FormsModule
   ],
   exports: [
     ImgComponent,
@@ -39,7 +45,9 @@ import { NgxGlideModule } from 'ngx-glide';
     ProductListComponent,
     SideNavComponent,
     ProductDetailsSlideComponent,
-    NgxGlideModule
+    NgxGlideModule,
+    RandomListComponent,
+    MemoizePipe
   ]
 })
 export class SharedModule { }

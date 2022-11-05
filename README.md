@@ -179,3 +179,106 @@ Ua vez configurado google analitycs implementamos [guess.js](https://guess-js.gi
 ### PWA con angular
 
 Por favor hacer el [siguiente curso](https://platzi.com/clases/1818-pwa-angular/26022-bienvenida-e-introduccion-al-curso/) para tener un mayor contexto de como funcionan las PWA con angular
+
+### SSR (Server side rendering)
+
+El server side rendering (o renderizado en la parte del servidor) se basa en la posibilidad de poder renderizar el HTML de nuestro componente en cadenas de texto en la parte del servidor en lugar del cliente. Estas cadenas de texto serán la respuesta que nuestro servidor devolverán a las peticiones de nuestra web. En vez de funciones que manipulen en DOM en el navegador, delegamos este renderizado a una fase anterior en el servidor.
+
+El SSR nos ayuda en 3 puntos clases:
+
+- SEO: Posicionamiento en los motores de busqueda.
+- Performance: Ya que el renderizano se hace desde el servidor.
+- First page: Ya que se hace desde back, la carga inicial va ser mucho mas rapida.
+
+Para implementar el SSR en angular, lo primero que debemos hacer es visitar la [pagina oficial](https://angular.io/guide/universal) para conocer los comandos mas actualizados. Para este caso el comando para utilizar angular universal y el SSR es:
+
+```txt
+ng add @nguniversal/express-engine
+```
+
+Este comando va a crear un servidor en express que nos va a permitir ejecutar el SSR de manera local a modo de desarrollo. Ademas de eso tambien va a crear y modificar algunos archivos:
+
+![Archivos creados y modificados](src/assets/images/Archivos-ssr.png)
+
+Para ejecutar el proyecto es con el siguiente comando:
+
+```txt
+npm run dev:ssr
+```
+
+**Una de las cosas a tener en cuenta** cuando se trabaja con SSR es que algunas funciones como **localstorage** no estaran disponibles ya que ahora toda esas funciones vienen desde el servidor y por ejemplo **localstorage** solo funciona en el navegador. Para solucionar esto podemos hacer una configuración en la cual indicamos que funciones son para el navegador y cuales para el servidor.
+
+```ts
+import { Injectable, Inject, PLATFORM_ID } from "@angular/core";
+import { isPlatformBrowser } from "@angular/common";
+import { environment } from "../../environments/environment";
+
+@Injectable({
+  providedIn: "root",
+})
+export class StorageService {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  private getStorage() {
+    if (isPlatformBrowser(this.platformId)) {
+      return environment.isLocalStorage ? localStorage : sessionStorage;
+    }
+
+    return null;
+  }
+
+  private storage = this.getStorage();
+
+  public saveItem = (key: string, value: unknown): void => {
+    if (isPlatformBrowser(this.platformId)) {
+      this.storage?.setItem(key, JSON.stringify(value));
+    }
+  };
+
+  public getItem = (key: string): any => {
+    if (isPlatformBrowser(this.platformId)) {
+      JSON.parse(`${this.storage?.getItem(key)}`);
+    }
+  };
+
+  public removeItem = (key: string) => {
+    if (isPlatformBrowser(this.platformId)) {
+      this.storage?.removeItem(key);
+    }
+  };
+}
+```
+
+Con esta configuración nos aseguramos de que funcionalidades van a estar del lado del servidor y cuales del cliente.
+
+## Rendimiento en tiempo de ejecución
+
+### Estrategia de detección de cambios
+
+En ocasiones nos encontramos con el problema de que tenemos algunos componentes que se reutilizan en la misma pagina, a primera vista no se ve algún problema con ello pero cuando se inspecciona un poco más a fondo el funcionamiento de estos componentes vemos que si alteramos alguno de ellos, el otro tambien se ve afectado. Esto se debe a la estrategia de detección de cambios que posee Angular por defecto, la cual consiste en redibujar todo si llega a detectar un cambio en el DOM.
+
+Para poder optimizar este comportamiento y solo modificar el componente que se ha actualizado debemos usar la estrategia de detección de cambios llamada onPush.
+
+```ts
+import { ..., ChangeDetectionStrategy } from '@angular/core';
+
+@Component({
+  selector: 'app-random-list',
+  templateUrl: './random-list.component.html',
+  styleUrls: ['./random-list.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
+})
+
+```
+
+Al aplicar esta estrategia de precarga notaremos que ahora solo se re-dibuja el componente modificado.
+
+### Pipes y funciones puras
+
+Las **funciones puras** son aquellas que sin importar cuantas veces ejecutes una funcion con los mismos parametros siempre va a dar el mismo resultado.
+
+Este concepto lo usa angular en sus **pipes** para poder procesar información y utilizar una tecnica llamada **Memoize**, la cual se encarga de memorizar un valor previamente calculado y solo lo va a cambiar cuando se actualice ese valor, en caso contrario lo traera de la cache.
+
+Para conocer un poco mas sobre el [Momoize](https://www.freecodecamp.org/news/understanding-memoize-in-javascript-51d07d19430e/).
+
+Los pipes puros son aquellos que utilizan las funciones puras y la tecnica Memoize para no tener que recalcular los valores. Los pipes por defectos son puros pero se tiene la posibilidad de cambiarlo a impuro, si se llega a dar este caso se recomienda comprender en porque se hizo ese cambio y en lo posible dejarlo como puro

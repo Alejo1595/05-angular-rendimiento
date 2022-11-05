@@ -33,6 +33,13 @@ const routes: Routes = [
         }
       },
       {
+        path: 'optimization',
+        loadChildren: () => import('./pages/optimization/optimization.module').then(m => m.OptimizationModule),
+        data: {
+          preload: true
+        }
+      },
+      {
         path: 'home',
         component: HomeComponent
       },

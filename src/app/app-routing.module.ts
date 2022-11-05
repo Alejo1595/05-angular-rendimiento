@@ -26,8 +26,9 @@ const routes: Routes = [
   imports: [RouterModule.forRoot(routes, {
     // preloadingStrategy: PreloadAllModules
     // preloadingStrategy: CustomPreloadService
-    preloadingStrategy: QuicklinkStrategy
-  })],
+    preloadingStrategy: QuicklinkStrategy,
+    initialNavigation: 'enabledBlocking'
+})],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

@@ -12,4 +12,15 @@
       {{ category.name }}
     </a>
   </li>
+
+  <li>
+    <a
+      class="border border-transparent rounded-md cursor-pointer px-2 py-1 hover:bg-green-store hover:text-white hover:border-green-store"
+      [routerLink]="'optimization'"
+      routerLinkActive="bg-green-store text-white border-green-store"
+      (click)="closeMenu()"
+    >
+      Optimization
+    </a>
+  </li>
 </ul>

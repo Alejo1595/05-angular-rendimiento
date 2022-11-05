@@ -1,0 +1,17 @@
+<section class="container mx-auto">
+  <div class="flex flex-col gap-3">
+    <h2 class="text-center text-2xl font-black">Optimization</h2>
+    <div class="grid grid-cols-2 gap-4">
+      <app-random-list
+        [title]="'list A'"
+        [randomList]="listA"
+        (add)="addNewItemList(true, $event)"
+      ></app-random-list>
+      <app-random-list
+        [title]="'list B'"
+        [randomList]="listB"
+        (add)="addNewItemList(false, $event)"
+      ></app-random-list>
+    </div>
+  </div>
+</section>
